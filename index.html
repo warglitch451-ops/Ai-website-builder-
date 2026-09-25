@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge AI | AI Website Production for Agencies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent: #0ea5e9;
+            --success: #10b981;
+            --indigo-900: #1e1b4b;
+            --slate-950: #020617;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-family: var(--font-main);
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- UI Components --- */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .badge {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to bottom right, #fff 40%, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 80px;
+        }
+
+        /* --- Dashboard Mockup --- */
+        .dashboard-preview {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .dashboard-preview .top-bar {
+            height: 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 12px;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-r { background: #ff5f56; }
+        .dot-y { background: #ffbd2e; }
+        .dot-g { background: #27c93f; }
+
+        .dashboard-content {
+            height: 500px;
+            background: var(--slate-950);
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+        }
+
+        .mock-sidebar {
+            border-right: 1px solid var(--border);
+            padding: 20px;
+        }
+
+        .mock-item {
+            height: 12px;
+            background: var(--border);
+            border-radius: 4px;
+            margin-bottom: 16px;
+            width: 80%;
+        }
+
+        .mock-main {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .mock-card-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .mock-card {
+            background: var(--bg-card);
+            height: 120px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        /* --- How It Works --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .how-it-works {
+            padding: 100px 0;
+            background: rgba(2, 6, 23, 0.5);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            position: relative;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 40px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 4px solid var(--bg-dark);
+        }
+
+        .step-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+        }
+
+        /* --- Features Section --- */
+        .features {
+            padding: 100px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-item {
+            padding: 32px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* --- White Label Section --- */
+        .white-label {
+            padding: 100px 0;
+            background: linear-gradient(to bottom, var(--bg-dark), var(--indigo-900));
+        }
+
+        .white-label-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .wl-preview {
+            background: #fff;
+            color: #333;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .wl-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 16px;
+        }
+
+        .wl-logo {
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        .wl-body {
+            height: 200px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* --- INTERACTIVE DEMO ENVIRONMENT --- */
+        #demo-app {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-header {
+            height: 64px;
+            background: var(--slate-950);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .demo-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .demo-badge {
+            background: #f59e0b;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.7rem;
+        }
+
+        .demo-viewport {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar in Demo */
+        .demo-sidebar {
+            width: 260px;
+            background: var(--bg-dark);
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-nav-item {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-nav-item:hover, .demo-nav-item.active {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-nav-item.active {
+            border-left: 3px solid var(--primary);
+        }
+
+        .demo-main {
+            flex: 1;
+            background: var(--slate-950);
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        /* Generation Screen */
+        .gen-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .gen-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .gen-prompt-box {
+            width: 100%;
+            background: var(--slate-950);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            font-family: inherit;
+            font-size: 1.1rem;
+            resize: none;
+            margin-bottom: 24px;
+            min-height: 120px;
+        }
+
+        .gen-prompt-box:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .gen-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            background: var(--slate-950);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        /* AI Analysis Modal */
+        .analysis-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+        }
+
+        .analysis-card {
+            background: var(--bg-card);
+            width: 600px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 32px;
+        }
+
+        .analysis-item {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .analysis-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .analysis-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Generator Progress */
+        .progress-container {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(99, 102, 241, 0.1);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .progress-steps {
+            text-align: left;
+            max-width: 300px;
+            margin: 40px auto 0;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+
+        .progress-step.active {
+            color: var(--text-main);
+        }
+
+        .progress-step.done {
+            color: var(--success);
+        }
+
+        /* --- EDITOR INTERFACE --- */
+        .editor-container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        .editor-sidebar {
+            width: 300px;
+            background: var(--bg-dark);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-canvas-container {
+            flex: 1;
+            background: #334155;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .editor-canvas {
+            width: 100%;
+            max-width: 1100px;
+            background: white;
+            min-height: 1200px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            transform-origin: top center;
+            transition: var(--transition);
+        }
+
+        .editor-canvas.mobile {
+            max-width: 375px;
+        }
+
+        .editor-canvas.tablet {
+            max-width: 768px;
+        }
+
+        .editor-properties {
+            width: 300px;
+            background: var(--bg-dark);
+            border-left: 1px solid var(--border);
+            padding: 20px;
+        }
+
+        /* Rendered Site Styles */
+        .site-section {
+            padding: 80px 40px;
+            color: #333;
+            position: relative;
+        }
+
+        .site-hero {
+            padding: 120px 40px;
+            text-align: center;
+            background: #f8fafc;
+        }
+
+        .site-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+            color: #0f172a;
+        }
+
+        .site-hero p {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .site-btn {
+            background: #0f172a;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* AI Copilot */
+        .copilot-trigger {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
+            z-index: 4000;
+        }
+
+        .copilot-panel {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            z-index: 4000;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .copilot-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copilot-chat {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-msg {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            max-width: 85%;
+        }
+
+        .chat-msg.ai {
+            background: rgba(255,255,255,0.05);
+            align-self: flex-start;
+        }
+
+        .chat-msg.user {
+            background: var(--primary);
+            align-self: flex-end;
+        }
+
+        .copilot-input {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .copilot-input input {
+            flex: 1;
+            background: var(--slate-950);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        /* --- Dashboard --- */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .project-thumb {
+            height: 160px;
+            background: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h4 { margin-bottom: 4px; }
+        .project-info p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Version Control */
+        .version-panel {
+            background: var(--slate-950);
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .version-tag {
+            padding: 4px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .version-tag.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Mobile Responsive Fixes */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .white-label-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .gen-options { grid-template-columns: 1fr; }
+            .editor-sidebar, .editor-properties { display: none; }
+            .analysis-card { width: 90%; }
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
+            margin-top: 100px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-col h4 { margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; color: var(--text-muted); }
+
+        /* Utilities */
+        .text-primary { color: var(--primary); }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 8px; }
+        .mt-4 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 8px; }
+
+    </style>
+</head>
+<body>
+
+    <!-- PUBLIC LANDING PAGE -->
+    <div id="public-site">
+        <nav>
+            <div class="container flex items-center justify-between">
+                <div class="logo">
+                    <div class="logo-icon">F</div>
+                    Forge AI
+                </div>
+                <div class="nav-links">
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#features">Features</a>
+                    <a href="#white-label">White Label</a>
+                    <button class="btn btn-secondary" onclick="openDemo()">Try Demo</button>
+                    <button class="btn btn-primary" onclick="requestDemo()">Request Agency Demo</button>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="container">
+                <div class="badge mb-2">Built for Agencies</div>
+                <h1>Turn client briefs into complete<br>websites with AI.</h1>
+                <p>Generate, edit, refine and prepare client websites faster with an AI-powered production workflow built for agencies.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-primary" onclick="openDemo()">Try Interactive Demo</button>
+                    <button class="btn btn-secondary" onclick="requestDemo()">Request Agency Demo</button>
+                </div>
+
+                <div class="dashboard-preview">
+                    <div class="top-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                    </div>
+                    <div class="dashboard-content">
+                        <div class="mock-sidebar">
+                            <div class="mock-item" style="width: 100%; height: 20px; background: var(--primary); opacity: 0.3;"></div>
+                            <div class="mock-item"></div>
+                            <div class="mock-item"></div>
+                            <div class="mock-item"></div>
+                            <div class="mock-item" style="margin-top: 40px;"></div>
+                            <div class="mock-item"></div>
+                        </div>
+                        <div class="mock-main">
+                            <div class="mock-item" style="width: 40%; height: 24px;"></div>
+                            <div class="mock-card-row">
+                                <div class="mock-card"></div>
+                                <div class="mock-card"></div>
+                                <div class="mock-card"></div>
+                            </div>
+                            <div class="mock-item" style="width: 100%; height: 150px; background: rgba(255,255,255,0.02);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Agency Production Workflow</h2>
+                    <p>From brief to publish in record time.</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Client Brief</h3>
+                        <p>Input your client's business details, goals, and preferred style into the Forge AI generator.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>AI Generation</h3>
+                        <p>Forge AI analyzes the brief and builds a complete, structured website with relevant content and design.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Refine & Edit</h3>
+                        <p>Use the visual editor and AI Copilot to polish the design and copy until it's pixel-perfect.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3>Client Approval</h3>
+                        <p>Send a white-labeled preview link to your client for feedback and final sign-off.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Built For Agencies</h2>
+                    <p>Professional tools for professional teams.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Fast Production</h3>
+                        <p>Go from zero to a high-quality first draft in under 60 seconds.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Visual Editor</h3>
+                        <p>Full control over every element. No coding required, but code-ready if you need it.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Copilot</h3>
+                        <p>Ask for changes like "make it more premium" and watch the AI execute perfectly.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📁</div>
+                        <h3>Project Management</h3>
+                        <p>Organize websites by client and workspace for seamless agency operations.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <h3>API Ready</h3>
+                        <p>Integrate Forge AI into your own internal tools or client portals.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <h3>White Label</h3>
+                        <p>Your brand, your logo, your colors. A completely private experience for your clients.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="white-label" class="white-label">
+            <div class="container">
+                <div class="white-label-content">
+                    <div>
+                        <div class="badge mb-2">Your Brand First</div>
+                        <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Your agency. Your brand. Your client experience.</h2>
+                        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 32px;">
+                            Forge AI is designed to sit behind the scenes. Customize the entire platform to match your agency's identity and provide a premium experience to your clients.
+                        </p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+                            <li class="flex items-center gap-2"><span class="text-primary">✓</span> Custom Logo & Branding</li>
+                            <li class="flex items-center gap-2"><span class="text-primary">✓</span> Branded Client Portals</li>
+                            <li class="flex items-center gap-2"><span class="text-primary">✓</span> Custom Support Information</li>
+                            <li class="flex items-center gap-2"><span class="text-primary">✓</span> No "Forge AI" branding visible</li>
+                        </ul>
+                    </div>
+                    <div class="wl-preview">
+                        <div class="wl-nav">
+                            <div class="wl-logo">YOUR AGENCY</div>
+                            <div style="display: flex; gap: 12px;">
+                                <div style="width: 40px; height: 10px; background: #eee;"></div>
+                                <div style="width: 40px; height: 10px; background: #eee;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <div style="width: 60%; height: 24px; background: #333; margin-bottom: 12px;"></div>
+                            <div style="width: 100%; height: 12px; background: #eee; margin-bottom: 6px;"></div>
+                            <div style="width: 90%; height: 12px; background: #eee;"></div>
+                        </div>
+                        <div class="wl-body">
+                            Client Review Portal
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="padding: 100px 0; text-align: center;">
+            <div class="container">
+                <h2 style="font-size: 3rem; margin-bottom: 24px;">Ready to scale your production?</h2>
+                <button class="btn btn-primary btn-lg" style="padding: 18px 36px; font-size: 1.1rem;" onclick="openDemo()">Build your first client website</button>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="logo mb-2">Forge AI</div>
+                        <p style="color: var(--text-muted);">The premium AI website production platform for high-growth agencies.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Platform</h4>
+                        <ul>
+                            <li>AI Generator</li>
+                            <li>Visual Editor</li>
+                            <li>White Label</li>
+                            <li>API Access</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li>Documentation</li>
+                            <li>Agency Guide</li>
+                            <li>Templates</li>
+                            <li>Support</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li>About Us</li>
+                            <li>Privacy Policy</li>
+                            <li>Terms of Service</li>
+                            <li>Contact</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                    © 2024 Forge AI. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- INTERACTIVE DEMO APP -->
+    <div id="demo-app" class="hidden">
+        <header class="demo-header">
+            <div class="flex items-center gap-2">
+                <div class="logo" style="font-size: 1.2rem;">
+                    <div class="logo-icon" style="width: 24px; height: 24px; font-size: 0.8rem;">F</div>
+                    Forge AI
+                </div>
+                <div class="demo-status">
+                    <span style="opacity: 0.3;">|</span>
+                    <span class="demo-badge">DEMO WORKSPACE</span>
+                    <span>Agency: <strong style="color: white;">Forge Creative</strong></span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="exitDemo()">Exit Demo</button>
+                <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">Upgrade Account</button>
+            </div>
+        </header>
+
+        <div class="demo-viewport">
+            <!-- Demo Sidebar -->
+            <aside class="demo-sidebar">
+                <div class="demo-nav-item active" onclick="showView('dashboard')">
+                    <span>📊</span> Dashboard
+                </div>
+                <div class="demo-nav-item" onclick="showView('generator')">
+                    <span>✨</span> Create Website
+                </div>
+                <div class="demo-nav-item">
+                    <span>👥</span> Clients
+                </div>
+                <div class="demo-nav-item">
+                    <span>🎨</span> White Label
+                </div>
+                <div class="demo-nav-item">
+                    <span>🔑</span> API Settings
+                </div>
+                <div style="margin-top: auto;">
+                    <div class="demo-nav-item">
+                        <span>⚙️</span> Settings
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Demo Content -->
+            <main class="demo-main" id="demo-main-content">
+                <!-- Dashboard View -->
+                <div id="view-dashboard">
+                    <div class="flex justify-between items-center mb-2" style="margin-bottom: 32px;">
+                        <h2>Projects</h2>
+                        <button class="btn btn-primary" onclick="showView('generator')">+ New Project</button>
+                    </div>
+                    <div class="dash-grid">
+                        <div class="project-card" onclick="loadProject('Lumora Interiors')">
+                            <div class="project-thumb">Preview Unavailable</div>
+                            <div class="project-info">
+                                <h4>Lumora Interiors</h4>
+                                <p>Client: Lumora Group • Updated 2h ago</p>
+                            </div>
+                        </div>
+                        <div class="project-card" onclick="loadProject('Nova Dental')">
+                            <div class="project-thumb">Preview Unavailable</div>
+                            <div class="project-info">
+                                <h4>Nova Dental</h4>
+                                <p>Client: Dr. Aris • Updated 1d ago</p>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-thumb" style="background: rgba(255,255,255,0.05); border: 2px dashed var(--border);">+</div>
+                            <div class="project-info">
+                                <h4>Start New Project</h4>
+                                <p>Create from brief or template</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generator View -->
+                <div id="view-generator" class="hidden">
+                    <div class="gen-container">
+                        <div class="mb-2" style="margin-bottom: 32px;">
+                            <h2 style="font-size: 2rem;">What are you building?</h2>
+                            <p style="color: var(--text-muted);">Describe the business and Forge AI will handle the rest.</p>
+                        </div>
+                        
+                        <div class="gen-card">
+                            <label class="form-group label">Business Description & Brief</label>
+                            <textarea id="main-prompt" class="gen-prompt-box" placeholder="Example: Create a premium website for a luxury interior design studio targeting high-income homeowners in Miami."></textarea>
+                            
+                            <div class="flex justify-between items-center mb-2" style="margin-bottom: 24px;">
+                                <button class="btn btn-secondary" onclick="aiAssistant()">Help me write a prompt</button>
+                                <button class="btn btn-primary" onclick="analyzeBrief()">Analyze Brief</button>
+                            </div>
+
+                            <div id="analysis-results" class="hidden" style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 24px;">
+                                <div class="analysis-item">
+                                    <div class="analysis-label">Website Name</div>
+                                    <div class="flex items-center justify-between">
+                                        <input type="text" id="site-name" class="analysis-value" style="background:transparent; border:none; color:white; width: 70%;" value="LUMORA INTERIORS">
+                                        <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.7rem;" onclick="suggestNames()">Suggest Names</button>
+                                    </div>
+                                </div>
+                                <div class="analysis-item">
+                                    <div class="analysis-label">Business Description</div>
+                                    <textarea id="site-desc" style="width: 100%; background: transparent; border: none; color: var(--text-muted); font-family: inherit; resize: none;">A premium interior design studio creating refined residential spaces for high-end homeowners.</textarea>
+                                </div>
+                                <div class="gen-options">
+                                    <div class="form-group">
+                                        <label>Website Type</label>
+                                        <select id="site-type">
+                                            <option>Business</option>
+                                            <option>Agency</option>
+                                            <option>Portfolio</option>
+                                            <option>Restaurant</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Design Style</label>
+                                        <select id="site-style">
+                                            <option>Luxury</option>
+                                            <option>Minimal</option>
+                                            <option>Modern</option>
+                                            <option>Bold</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" style="width: 100%; height: 50px;" onclick="startGeneration()">Generate Website</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress View -->
+                <div id="view-progress" class="hidden">
+                    <div class="progress-container">
+                        <div class="spinner"></div>
+                        <h2 id="progress-text">Understanding your business...</h2>
+                        <div class="progress-steps">
+                            <div class="progress-step" id="step-1"><span>○</span> Planning website structure...</div>
+                            <div class="progress-step" id="step-2"><span>○</span> Creating professional content...</div>
+                            <div class="progress-step" id="step-3"><span>○</span> Designing visual system...</div>
+                            <div class="progress-step" id="step-4"><span>○</span> Building responsive sections...</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Editor View (Full Screen) -->
+            <div id="view-editor" class="hidden editor-container">
+                <aside class="editor-sidebar">
+                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                        <h4 id="edit-site-title">Website Editor</h4>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">Editing: Home Page</p>
+                    </div>
+                    <div style="flex: 1; padding: 20px;">
+                        <div class="mb-2" style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Sections</div>
+                        <div class="demo-nav-item active" style="padding: 8px 0;">Hero Section</div>
+                        <div class="demo-nav-item" style="padding: 8px 0;">About Us</div>
+                        <div class="demo-nav-item" style="padding: 8px 0;">Services</div>
+                        <div class="demo-nav-item" style="padding: 8px 0;">Portfolio</div>
+                        <div class="demo-nav-item" style="padding: 8px 0;">Testimonials</div>
+                        <div class="demo-nav-item" style="padding: 8px 0;">Contact</div>
+                        <button class="btn btn-secondary" style="width: 100%; margin-top: 20px; font-size: 0.8rem;">+ Add Section</button>
+                    </div>
+                    <div style="padding: 20px; border-top: 1px solid var(--border);">
+                        <button class="btn btn-primary" style="width: 100%;" onclick="showView('dashboard')">Save & Close</button>
+                    </div>
+                </aside>
+
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="version-panel">
+                        <div class="flex items-center gap-2" style="margin-right: 20px;">
+                            <button class="btn btn-secondary" style="padding: 4px 8px;" onclick="setViewport('desktop')">💻</button>
+                            <button class="btn btn-secondary" style="padding: 4px 8px;" onclick="setViewport('tablet')"> tablet </button>
+                            <button class="btn btn-secondary" style="padding: 4px 8px;" onclick="setViewport('mobile')">📱</button>
+                        </div>
+                        <div class="version-tag active" id="v1-tag">Version 1 (Original)</div>
+                        <div class="version-tag hidden" id="v2-tag">Version 2 (AI Refined)</div>
+                        <button class="btn btn-secondary" style="margin-left: auto; font-size: 0.75rem;" onclick="recreatePrompt()">✨ Recreate Website</button>
+                    </div>
+                    <div class="editor-canvas-container">
+                        <div id="canvas" class="editor-canvas">
+                            <!-- Dynamic Site Content -->
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="editor-properties">
+                    <h4 class="mb-2">Properties</h4>
+                    <div class="form-group mb-2">
+                        <label>Primary Color</label>
+                        <div class="flex gap-2">
+                            <div style="width: 24px; height: 24px; background: #0f172a; border-radius: 4px;"></div>
+                            <input type="text" value="#0F172A" style="font-size: 0.8rem; background: transparent; border: 1px solid var(--border); color: white; padding: 2px 4px;">
+                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label>Heading Font</label>
+                        <select style="font-size: 0.8rem; background: var(--slate-950); color: white; border: 1px solid var(--border); width: 100%;">
+                            <option>Outfit</option>
+                            <option>Inter</option>
+                            <option>Playfair Display</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Content Layout</label>
+                        <select style="font-size: 0.8rem; background: var(--slate-950); color: white; border: 1px solid var(--border); width: 100%;">
+                            <option>Centered</option>
+                            <option>Split Screen</option>
+                            <option>Full Width</option>
+                        </select>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!-- AI Copilot Panel -->
+        <div id="copilot-panel" class="copilot-panel hidden">
+            <div class="copilot-header">
+                <div class="flex items-center gap-2">
+                    <span style="color: var(--primary);">🤖</span>
+                    <strong>Forge Copilot</strong>
+                </div>
+                <button onclick="toggleCopilot()" style="background:transparent; color:white; font-size: 1.2rem;">×</button>
+            </div>
+            <div class="copilot-chat" id="chat-box">
+                <div class="chat-msg ai">Hello! I'm your AI production assistant. How can I help you refine this website?</div>
+            </div>
+            <div class="copilot-input">
+                <input type="text" id="chat-input" placeholder="e.g. Make it more premium...">
+                <button class="btn btn-primary" onclick="sendChat()">Send</button>
+            </div>
+        </div>
+        <div class="copilot-trigger" id="copilot-btn" onclick="toggleCopilot()">
+            <span>🤖</span>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="recreate-modal" class="analysis-modal hidden">
+        <div class="analysis-card">
+            <h3>Recreate Website</h3>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">This will generate a new version while keeping your current one safe.</p>
+            <div class="form-group mb-2">
+                <label>What should we change?</label>
+                <textarea id="recreate-input" class="gen-prompt-box" style="min-height: 80px;" placeholder="e.g. Make the design darker, more luxurious and editorial."></textarea>
+            </div>
+            <div class="flex justify-between">
+                <button class="btn btn-secondary" onclick="closeRecreate()">Cancel</button>
+                <button class="btn btn-primary" onclick="runRecreate()">Generate New Version</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let currentSite = {
+            name: "Lumora Interiors",
+            desc: "A premium interior design studio creating refined residential spaces for high-end homeowners.",
+            style: "Luxury",
+            type: "Business",
+            theme: {
+                primary: "#0f172a",
+                bg: "#ffffff",
+                text: "#334155"
+            }
+        };
+
+        let versions = [JSON.parse(JSON.stringify(currentSite))];
+        let currentVersionIndex = 0;
+
+        // Navigation
+        function openDemo() {
+            document.getElementById('public-site').classList.add('hidden');
+            document.getElementById('demo-app').classList.remove('hidden');
+            showView('dashboard');
+        }
+
+        function exitDemo() {
+            document.getElementById('demo-app').classList.add('hidden');
+            document.getElementById('public-site').classList.remove('hidden');
+        }
+
+        function showView(viewId) {
+            const views = ['dashboard', 'generator', 'progress', 'editor'];
+            views.forEach(v => {
+                const el = document.getElementById('view-' + v);
+                if (el) el.classList.add('hidden');
+            });
+            document.getElementById('view-' + viewId).classList.remove('hidden');
+            
+            // Sidebar active state
+            const navItems = document.querySelectorAll('.demo-nav-item');
+            navItems.forEach(item => {
+                if(item.innerText.toLowerCase().includes(viewId)) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            if(viewId === 'editor') {
+                document.getElementById('copilot-btn').classList.remove('hidden');
+                renderSite();
+            } else {
+                document.getElementById('copilot-btn').classList.add('hidden');
+                document.getElementById('copilot-panel').classList.add('hidden');
+            }
+        }
+
+        // Generator Logic
+        function analyzeBrief() {
+            const prompt = document.getElementById('main-prompt').value;
+            if(!prompt) return alert("Please enter a brief first.");
+            
+            // Simulate AI Analysis
+            document.getElementById('analysis-results').classList.remove('hidden');
+            if(prompt.toLowerCase().includes('interior')) {
+                document.getElementById('site-name').value = "LUMORA INTERIORS";
+                document.getElementById('site-desc').value = "A premium interior design studio creating refined residential spaces for high-end homeowners in Miami.";
+                document.getElementById('site-type').value = "Business";
+                document.getElementById('site-style').value = "Luxury";
+            }
+        }
+
+        function suggestNames() {
+            const names = ["ATELIER NOIR", "VELORA STUDIO", "ARCADIA DESIGN", "FORME HOUSE", "LUMORA"];
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            document.getElementById('site-name').value = randomName;
+        }
+
+        function startGeneration() {
+            showView('progress');
+            const steps = [
+                { id: 'step-1', text: "Planning website structure..." },
+                { id: 'step-2', text: "Creating professional content..." },
+                { id: 'step-3', text: "Designing visual system..." },
+                { id: 'step-4', text: "Building responsive sections..." }
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if(i > 0) document.getElementById(steps[i-1].id).classList.add('done');
+                if(i < steps.length) {
+                    document.getElementById(steps[i].id).classList.add('active');
+                    document.getElementById('progress-text').innerText = steps[i].text;
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    completeGeneration();
+                }
+            }, 1200);
+        }
+
+        function completeGeneration() {
+            currentSite.name = document.getElementById('site-name').value;
+            currentSite.desc = document.getElementById('site-desc').value;
+            currentSite.style = document.getElementById('site-style').value;
+            
+            versions = [JSON.parse(JSON.stringify(currentSite))];
+            currentVersionIndex = 0;
+            
+            showView('editor');
+        }
+
+        // Editor Logic
+        function renderSite() {
+            const site = versions[currentVersionIndex];
+            const canvas = document.getElementById('canvas');
+            document.getElementById('edit-site-title').innerText = site.name;
+
+            let html = `
+                <div class="site-hero" style="background: ${site.style === 'Luxury' ? '#0f172a' : '#f8fafc'}; color: ${site.style === 'Luxury' ? 'white' : '#0f172a'}">
+                    <h1 style="color: inherit">${site.name}</h1>
+                    <p style="color: inherit; opacity: 0.8">${site.desc}</p>
+                    <button class="site-btn" style="background: ${site.style === 'Luxury' ? '#6366f1' : '#0f172a'}">Explore Our Work</button>
+                </div>
+                <div class="site-section">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                        <div>
+                            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Crafting environments that inspire.</h2>
+                            <p style="color: #64748b; margin-bottom: 24px;">We believe that interior design is more than just aesthetics. It's about creating a space that reflects your personality and improves your quality of life.</p>
+                            <a href="#" style="color: #6366f1; font-weight: 600;">Learn more about our process →</a>
+                        </div>
+                        <div style="height: 400px; background: #e2e8f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                            Project Image Placeholder
+                        </div>
+                    </div>
+                </div>
+                <div class="site-section" style="background: #f1f5f9;">
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <h2>Our Services</h2>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                        ${['Residential Design', 'Commercial Styling', 'Furniture Curation'].map(s => `
+                            <div style="background: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                                <h3 style="margin-bottom: 12px;">${s}</h3>
+                                <p style="color: #64748b; font-size: 0.9rem;">Bespoke solutions tailored to your unique requirements and space.</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            canvas.innerHTML = html;
+        }
+
+        function setViewport(type) {
+            const canvas = document.getElementById('canvas');
+            canvas.className = 'editor-canvas ' + type;
+        }
+
+        // Recreate Feature
+        function recreatePrompt() {
+            document.getElementById('recreate-modal').classList.remove('hidden');
+        }
+
+        function closeRecreate() {
+            document.getElementById('recreate-modal').classList.add('hidden');
+        }
+
+        function runRecreate() {
+            const input = document.getElementById('recreate-input').value;
+            closeRecreate();
+            showView('progress');
+            
+            setTimeout(() => {
+                const newVersion = JSON.parse(JSON.stringify(versions[0]));
+                if(input.toLowerCase().includes('dark')) {
+                    newVersion.style = "Luxury";
+                    newVersion.name = newVersion.name.toUpperCase();
+                }
+                
+                versions.push(newVersion);
+                currentVersionIndex = versions.length - 1;
+                
+                document.getElementById('v2-tag').classList.remove('hidden');
+                document.getElementById('v2-tag').classList.add('active');
+                document.getElementById('v1-tag').classList.remove('active');
+                
+                showView('editor');
+            }, 2000);
+        }
+
+        // Copilot Logic
+        function toggleCopilot() {
+            const panel = document.getElementById('copilot-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        function sendChat() {
+            const input = document.getElementById('chat-input');
+            const chatBox = document.getElementById('chat-box');
+            if(!input.value) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.innerText = input.value;
+            chatBox.appendChild(userMsg);
+
+            const prompt = input.value.toLowerCase();
+            input.value = "";
+
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'chat-msg ai';
+                
+                if(prompt.includes('premium')) {
+                    aiMsg.innerHTML = "I've analyzed the design. To make it more premium, I suggest:<br>1. Increasing white space<br>2. Changing font to 'Outfit'<br>3. Using a darker color palette.<br><button class='btn btn-primary' style='padding: 4px 8px; margin-top: 8px;' onclick='applyAiChanges()'>Apply Changes</button>";
+                } else {
+                    aiMsg.innerText = "I can certainly help with that. Would you like me to adjust the layout or the copy for this section?";
+                }
+                
+                chatBox.appendChild(aiMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        function applyAiChanges() {
+            const site = versions[currentVersionIndex];
+            site.style = "Luxury";
+            site.desc = "An exclusive design atelier specializing in ultra-high-end residential architecture and interiors.";
+            renderSite();
+            
+            const chatBox = document.getElementById('chat-box');
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'chat-msg ai';
+            aiMsg.innerText = "Changes applied successfully. The website now feels more editorial and premium.";
+            chatBox.appendChild(aiMsg);
+        }
+
+        // Misc
+        function requestDemo() {
+            alert("Thank you! An agency specialist will contact you shortly to schedule a full platform demo.");
+        }
+
+        function loadProject(name) {
+            currentSite.name = name;
+            showView('editor');
+        }
+
+    </script>
+</body>
+</html></html>
